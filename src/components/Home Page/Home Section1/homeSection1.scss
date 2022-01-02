@@ -1,0 +1,86 @@
+.homeSection1 {
+  background-image: url("https://www.motioninvest.com/wp-content/uploads/2021/06/Green_Background_Hero.png");
+  background-repeat: no-repeat;
+  max-width: 1150px;
+  margin: 5rem auto 0;
+
+  display: flex;
+  align-items: center;
+
+  .left {
+    width: 50%;
+
+    img {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  .right {
+    min-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      font-family: "Poppins", Sans-serif;
+      font-size: 58px;
+      font-weight: 600;
+      line-height: 1.2em;
+      text-shadow: 0px 0px 0px rgb(0 0 0 / 30%);
+      color: #6754e2;
+    }
+
+    .btn-wrap {
+      margin-top: 3rem;
+      display: flex;
+
+      .buy {
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+
+        background-color: #2dc799;
+        color: #fff;
+
+        box-shadow: 0px 5px 6px 0px rgb(0 0 0 / 23%);
+        border-radius: 10px 10px 10px 10px;
+
+        padding: 7px 50px;
+
+        &:hover {
+          background-color: #e8e1fc;
+          color: #2dc799;
+        }
+      }
+
+      .sell {
+        margin-left: 30px;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+
+        background-color: #4169e1;
+        color: #fff;
+
+        box-shadow: 0px 5px 6px 0px rgb(0 0 0 / 23%);
+        border-radius: 10px 10px 10px 10px;
+
+        padding: 7px 50px;
+
+        &:hover {
+          background-color: #e8e1fc;
+          color: #6754e2;
+        }
+      }
+    }
+  }
+}
