@@ -1,0 +1,133 @@
+.price__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pr__container {
+  margin: 0 2rem;
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+  margin-top: 3.5rem;
+  margin-left: 2rem;
+  border: 1px solid rgba(128, 128, 128, 0.158);
+  border-radius: 8px;
+  .pr__header {
+    margin-top: 13px;
+    margin-bottom: 1.5rem;
+    .pr__para {
+      font-size: 10px;
+      color: gray;
+    }
+    .pr__heading {
+      font-weight: 700;
+      font-size: 18px;
+    }
+  }
+  .pr__body {
+    .pr__body1 {
+      margin-bottom: 1.5rem;
+      .body1__heading {
+        font-size: 11px;
+        font-weight: 700;
+        color: gray;
+        margin-bottom: 6px;
+      }
+    }
+    .body1__data {
+      display: flex;
+      @media only screen and (max-width: 440px) {
+        flex-direction: column;
+      }
+
+      .data__input {
+        padding: 10px 15px;
+        display: flex;
+        width: 320px;
+        height: 28px;
+        align-items: center;
+        border-radius: 10px;
+        position: relative;
+        margin-bottom: 10px;
+        @media only screen and (max-width: 440px) {
+          width: 80%;
+        }
+
+        .data__input {
+          padding: 5px 15px;
+          display: flex;
+          width: 50%;
+          height: 28px;
+          align-items: center;
+          border-radius: 10px;
+          margin-bottom: 10px;
+        }
+        .body1__input {
+          border: none;
+          width: 100%;
+          // background-color: rgba(250, 250, 250, 1);
+          outline: none;
+          height: 26px;
+          font-size: 18px;
+        }
+        .body1__input__edit {
+          background-color: rgba(250, 250, 250, 1);
+          border: none;
+          width: 40%;
+          outline: none;
+          height: 26px;
+          font-size: 18px;
+        }
+        .input__euro {
+          font-size: 18px;
+          margin-bottom: 2px;
+          color: orange;
+          margin-right: 1rem;
+        }
+
+        .input__euro2 {
+          font-size: 14px;
+          margin-bottom: 2px;
+          color: orange;
+          margin-right: 1rem;
+          position: absolute;
+          left: 53px;
+        }
+        .input__edit {
+          font-size: 11px;
+          font-weight: 600;
+          cursor: pointer;
+          position: absolute;
+          left: 83px;
+        }
+      }
+      .percent__input {
+        position: relative;
+      }
+      .data__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 41, 121, 1);
+        color: white;
+        padding: 0 20px;
+        border-radius: 7px;
+        margin-left: 10px;
+        height: 47px;
+        @media only screen and (max-width: 440px) {
+          margin-left: 0px;
+          width: 76%;
+        }
+        margin-bottom: 10px;
+        .btn__icon {
+          height: 15px;
+          margin-right: 5px;
+        }
+
+        .btn__data {
+          font-size: 11px;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}

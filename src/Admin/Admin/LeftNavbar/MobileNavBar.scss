@@ -1,0 +1,23 @@
+.mobile__navbar {
+  height: 100vh;
+  .burger {
+    color: white;
+    padding: 4px 4px;
+    background-color: rgba(0, 41, 121, 1);
+    height: 100%;
+    width: 23px;
+    .nav__logo {
+      height: 68px;
+    }
+    .nav__logo {
+      height: 18px;
+      color: red;
+    }
+  }
+  .icons {
+    margin-top: 1rem;
+  }
+  .body1__icon {
+    margin: 10px 0;
+  }
+}

@@ -7,11 +7,14 @@ const DbConnection = require("./DataBaseConnection")
 
 const AdminRouter = require("./Routes/adminRoutes")
 const UserRouter = require("./Routes/userRoutes")
-
+const PostRouter = require("./Routes/postRouter")
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+    origin: true,
+    credentials: true,
+}))
 app.use(express.json())
 env.config()
 
@@ -19,9 +22,9 @@ env.config()
 DbConnection()
 
 
-app.use('/auth/admin' , AdminRouter)
-app.use("/auth/user" , UserRouter)
-
+app.use('/auth/admin', AdminRouter)
+app.use("/auth/user", UserRouter)
+app.use("/post", PostRouter)
 
 let port = process.env.PORT || 4000
 app.listen(port, () => {
