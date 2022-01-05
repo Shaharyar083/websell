@@ -1,0 +1,123 @@
+.nb__container {
+  background-color: rgba(0, 41, 121, 1);
+  min-height: 100vh;
+  // padding: 32px 0;
+  width: 100%;
+  @media only screen and (max-width: 1000px) {
+    // display: none;
+  }
+  .nb__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+  }
+
+  .nb__body {
+    margin-top: 2rem;
+    .active__link {
+      background-image: linear-gradient(
+        90deg,
+        rgba(28, 70, 133, 1),
+        rgba(28, 65, 133, 0)
+      );
+      border-left: 4px solid white;
+      font-weight: bolder;
+      padding-left: 30px !important;
+
+    }
+    .nb__body1 {
+      text-decoration: none;
+      display: flex;
+      margin: 1rem 0;
+      padding: 10px 0;
+      padding-left: 35px;
+
+      .body1__para {
+        color: white;
+        margin-left: 10px;
+        // font-size: 19px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+    }
+  }
+  .nb__footer {
+    .nb__footer__heading {
+      color: white;
+      padding-left: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 60px;
+    }
+    .footer__body {
+      .active__link {
+        background-image: linear-gradient(
+          90deg,
+          rgba(28, 70, 133, 1),
+          rgba(28, 65, 133, 0)
+        );
+        border-left: 4px solid white;
+      font-weight: 700;
+      padding-left: 30px !important;
+      }
+
+      .footer__body1 {
+        text-decoration: none;
+        display: flex;
+        // padding-left: 35px;
+        position: relative;
+        margin: 1rem 0;
+        padding: 10px 0;
+        padding-left: 35px;
+        .body1__para {
+          color: white;
+          margin-left: 10px;
+          // font-size: 19px;
+        }
+        .footer__notify {
+          font-size: 14px;
+          color: white;
+          background-color: red;
+          border-radius: 50px;
+          height: 16px;
+          width: 16px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          right: 40px;
+          font-weight: bold;
+          top: 14px;
+          position: absolute;
+        }
+      }
+    }
+  }
+  .footer__bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .bottom__para {
+      color: white;
+      margin: 1.3rem 0;
+      padding: 0 44px;
+      text-align: center;
+    }
+    .bottom__btn {
+      width: 154px;
+      height: 40px;
+      color: rgba(0, 41, 121, 1);
+      background-color: white;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: bolder;
+      margin-bottom: 1.5rem;
+    }
+  }
+}
