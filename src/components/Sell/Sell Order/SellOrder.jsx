@@ -6,13 +6,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import "./sellOrder.scss";
 
 const SellOrder = () => {
-  const [step, setStep] = useState(1);
-  const [status, setStatus] = useState(12);
-
   const [data, setData] = useState({
-    email: "",
-    fullName: "",
-    lastName: "",
     url: "",
     niche: "",
     income: "",
@@ -28,86 +22,12 @@ const SellOrder = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleStep = () => {
-    setStep(step + 1);
-    setStatus(status + 12);
-  };
+  const submit = () => {};
 
-  const submit = () => {
-    if (trend === "inc") {
-      let income = parseInt(`${data.income}`);
-      let final = income * 12;
-      setValue(final);
-    } else if (trend === "dec") {
-      let income = parseInt(`${data.income}`);
-      let final = income * 3;
-      setValue(final);
-    } else if (trend === "falt") {
-      let income = parseInt(`${data.income}`);
-      let final = income * 6;
-      setValue(final);
-    } else if (trend === "hill") {
-      let income = parseInt(`${data.income}`);
-      let final = income * 9;
-      setValue(final);
-    }
-  };
   return (
     <>
       <div className="sellOrder">
         <div className="valuate-form">
-          {/* {step === 1 && ( */}
-          {/* <div className="step1">
-            <div className="title">EMAIL ADDRESS</div>
-
-            <div className="para">What is the best way to reach you?</div>
-
-            <input
-              placeholder="Enter your email"
-              name="email"
-              type="email"
-              value={data.email}
-              onChange={handleInput}
-            />
-          </div> */}
-          {/* )} */}
-
-          {/* {step === 2 && ( */}
-          {/* <div className="step2">
-            <div className="title">NAME OF SELLER</div>
-
-            <div className="para">Let us know your first & last name</div>
-
-            <div className="input-wrap">
-              <input
-                placeholder="First Name"
-                name="fullName"
-                type="text"
-                value={data.fullName}
-                onChange={handleInput}
-              />
-
-              <input
-                placeholder="Last Name"
-                name="lastName"
-                type="text"
-                value={data.lastName}
-                onChange={handleInput}
-              />
-            </div>
-
-            <div
-              className="btn-c"
-              onClick={() => {
-                handleStep();
-              }}
-            >
-              Next Step
-            </div>
-          </div> */}
-          {/* )} */}
-
-          {/* {step === 3 && ( */}
           <div className="step1">
             <div className="title">WHAT IS YOUR URL?</div>
 
@@ -120,19 +40,8 @@ const SellOrder = () => {
               value={data.url}
               onChange={handleInput}
             />
-
-            {/* <div
-              className="btn-c"
-              onClick={() => {
-                handleStep();
-              }}
-            >
-              Next Step
-            </div> */}
           </div>
-          {/* )} */}
 
-          {/* {step === 4 && ( */}
           <div className="step1">
             <div className="title">Website Niche</div>
 
@@ -145,19 +54,8 @@ const SellOrder = () => {
               value={data.niche}
               onChange={handleInput}
             />
-
-            {/* <div
-              className="btn-c"
-              onClick={() => {
-                handleStep();
-              }}
-            >
-              Next Step
-            </div> */}
           </div>
-          {/* )} */}
 
-          {/* {step === 5 && ( */}
           <div className="step4">
             <div className="title">MONETIZATION METHOD</div>
 
@@ -193,19 +91,8 @@ const SellOrder = () => {
                 {monetization.adsense && <AiOutlineCheck className="icon" />}
               </div>
             </div>
-
-            {/* <div
-              className="btn-c"
-              onClick={() => {
-                handleStep();
-              }}
-            >
-              Next Step
-            </div> */}
           </div>
-          {/* )} */}
 
-          {/* {step === 6 && ( */}
           <div className="step5">
             <div className="title">Trend</div>
 
@@ -266,19 +153,8 @@ const SellOrder = () => {
                 {trend === "hill" && <AiOutlineCheck className="icon" />}
               </div>
             </div>
-
-            {/* <div
-              className="btn-c"
-              onClick={() => {
-                handleStep();
-              }}
-            >
-              Next Step
-            </div> */}
           </div>
-          {/* )} */}
 
-          {/* {step === 7 && ( */}
           <div className="step1">
             <div className="title">INCOME </div>
 
@@ -293,19 +169,8 @@ const SellOrder = () => {
               value={data.income}
               onChange={handleInput}
             />
-
-            {/* <div
-              className="btn-c"
-              onClick={() => {
-                handleStep();
-              }}
-            >
-              Next Step
-            </div> */}
           </div>
-          {/* )} */}
 
-          {/* {step === 8 && ( */}
           <div className="step1">
             <div className="title">Analytics</div>
 
@@ -313,18 +178,17 @@ const SellOrder = () => {
               Please share your Google Analytics with us. Our email is
               websell@gmail.com
             </div>
-
-            <div
-              className="btn-c"
-              style={{ marginTop: "30px" }}
-              onClick={() => {
-                submit();
-              }}
-            >
-              Submit
-            </div>
           </div>
-          {/* )} */}
+
+          <div
+            className="btn-c"
+            style={{ marginTop: "30px" }}
+            onClick={() => {
+              submit();
+            }}
+          >
+            Submit
+          </div>
         </div>
       </div>
     </>

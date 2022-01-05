@@ -1,6 +1,7 @@
 .sellOrder {
-  max-width: 1150px;
+  max-width: 900px;
   margin: auto;
+
   .valuate-form {
     margin-top: 4rem;
     width: 100%;
@@ -12,22 +13,23 @@
     .title {
       color: #6754e2;
       font-weight: 400;
-      font-size: 34px;
-      text-align: center;
+      font-size: 28px;
+      text-align: start;
     }
 
     .para {
-      text-align: center;
-      font-size: 16px;
+      text-align: start;
+      font-size: 14px;
       line-height: 1.3;
       margin: 8px 0 0;
     }
 
     .btn-c {
+      margin-bottom: 4rem;
       cursor: pointer;
       font-family: "Poppins", sans-serif;
       font-weight: 400;
-      font-size: 16px;
+      font-size: 20px;
 
       background-color: #6754e2;
       color: #fff;
@@ -35,20 +37,21 @@
       box-shadow: 0px 5px 6px 0px rgb(0 0 0 / 23%);
       border-radius: 10px 10px 10px 10px;
 
-      padding: 12px 24px;
+      padding: 15px 200px;
     }
 
     .step1 {
+      margin-bottom: 40px;
       width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
 
       input {
-        margin: 20px 0;
+        margin: 15px 0;
         border: 2px solid #6754e2;
-        width: 80%;
+        width: 100%;
         padding: 15px 20px;
         border-radius: 20px;
         outline: none;
@@ -58,7 +61,7 @@
         cursor: pointer;
         font-family: "Poppins", sans-serif;
         font-weight: 400;
-        font-size: 16px;
+        font-size: 20px;
 
         background-color: #6754e2;
         color: #fff;
@@ -66,38 +69,16 @@
         box-shadow: 0px 5px 6px 0px rgb(0 0 0 / 23%);
         border-radius: 10px 10px 10px 10px;
 
-        padding: 12px 24px;
-      }
-    }
-
-    .step2 {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      .input-wrap {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-
-        input {
-          outline: none;
-          margin: 20px 0;
-          border: 2px solid #6754e2;
-          width: 48%;
-          padding: 15px 20px;
-          border-radius: 20px;
-        }
+        padding: 15px 20px;
       }
     }
 
     .step4 {
+      margin-bottom: 40px;
       width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
 
       .mone {
@@ -143,10 +124,11 @@
     }
 
     .step5 {
+      margin-bottom: 40px;
       width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
 
       .trend {
