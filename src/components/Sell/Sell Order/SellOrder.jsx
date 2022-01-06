@@ -72,6 +72,8 @@ const SellOrder = (props) => {
         formData
       );
 
+      console.log("sss", response);
+
       toast.success("Your order is placed successfully", {
         position: "top-center",
         autoClose: 3000,

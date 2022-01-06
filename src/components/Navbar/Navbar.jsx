@@ -91,15 +91,15 @@ const Navbar = () => {
             </Link>
           ) : login ? (
             <Link
-              to="/website-valuation-tool"
+              to="/"
               style={{ textDecoration: "none" }}
               className="free1"
               onClick={() => {
-                history.push("/");
-
                 localStorage.removeItem("login");
 
-                window.location.reload();
+                setTimeout(() => {
+                  window.location.reload();
+                }, 1000);
               }}
             >
               Log out
