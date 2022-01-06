@@ -17,32 +17,54 @@ router.get("/get", async (req, res) => {
 const upload = multer();
 router.post("/create", upload.single("file"), async (req, res) => {
   try {
-    let { url, niche, price, income, trend, source } = req.body;
-    const imgFile = req.file.path;
-    cloudinary.uploader.upload(imgFile, async (error, result) => {
-      if (result) {
-        let PostData = new PostModel({
-          url,
-          niche,
-          price,
-          income,
-          trend,
-          source,
-          img: result.url,
-          imgId: result.public_id,
-        });
-
-        await PostData.save()
-          .then((data) => {
-            res.status(200).json({ msg: "Post Created Success", data });
-          })
-          .catch((err) => {
-            res.status(400).json({ msg: "Error While Creating Post", err });
+    let { url, niche, price, income, trend, source, user, type } = req.body;
+    if (type == "market") {
+      const imgFile = req.file.path;
+      cloudinary.uploader.upload(imgFile, async (error, result) => {
+        if (result) {
+          let PostData = new PostModel({
+            url,
+            niche,
+            price,
+            income,
+            trend,
+            source,
+            type,
+            user,
+            img: result.url,
+            imgId: result.public_id,
           });
-      } else {
-        res.status(400).json({ msg: "Error While Upload Img", error });
-      }
-    });
+
+          await PostData.save()
+            .then((data) => {
+              res.status(200).json({ msg: "Post Created Success", data });
+            })
+            .catch((err) => {
+              res.status(400).json({ msg: "Error While Creating Post", err });
+            });
+        } else {
+          res.status(400).json({ msg: "Error While Upload Img", error });
+        }
+      });
+    } else {
+      let PostData = new PostModel({
+        url,
+        niche,
+        price,
+        income,
+        trend,
+        source,
+        type,
+        user,
+      });
+      await PostData.save()
+        .then((data) => {
+          res.status(200).json({ msg: "Post Created Success", data });
+        })
+        .catch((err) => {
+          res.status(400).json({ msg: "Error While Creating Post", err });
+        });
+    }
   } catch (err) {
     res.status(400).json({ msg: "Server Error at Creating post", err });
   }
