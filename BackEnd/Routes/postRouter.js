@@ -21,6 +21,7 @@ router.post("/create", upload.single("file"), async (req, res) => {
         let { url, niche, price, income, trend, source, user, type } = req.body
         if (type == "market") {
             const imgFile = req.file.path
+            console.log("FILE=========== " , req.file);
             cloudinary.uploader.upload(imgFile, async (error, result) => {
                 if (result) {
                     let PostData = new PostModel({
