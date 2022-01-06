@@ -1,6 +1,6 @@
 import React from "react";
 // import { Routes, Route } from "react-router-dom";
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory } from "react-router-dom";
 
 import Homee from "./Admin/Admin/Home/Homee";
 import Buy from "./components/Buy/Buy";
@@ -17,17 +17,16 @@ function App() {
   return (
     <>
       <Switch>
-        <Route path='/' component={Homee} />
-        <Route path="/home" component={Home} />
+        {/* <Route exact path="/" component={Homee} /> */}
+        <Route exact path="/" component={Home} />
         <Route path="/website-valuation-tool" component={WebsiteValuation} />
         <Route path="/contact-us" component={ContactUs} />
         <Route path="/buy" component={Buy} />
-        <Route path="/sell" component={Sell}  />
+        <Route path="/sell" component={Sell} />
 
-        <Route path="/login" component={Login}  />
+        <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
       </Switch>
-    
     </>
   );
 }

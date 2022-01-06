@@ -2,6 +2,25 @@
   max-width: 900px;
   margin: auto;
 
+  .text-main {
+    color: #6754e2;
+    font-weight: bold;
+    font-size: 40px;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .imagePreivew {
+    margin-top: 20px;
+    width: 400px;
+    // margin: auto;
+
+    img {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
   .valuate-form {
     margin-top: 4rem;
     width: 100%;

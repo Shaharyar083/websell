@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./login.scss";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import "./login.scss";
+
 const Login = () => {
+  const history = useHistory();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -14,14 +19,45 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    let response = await axios.post("http://localhost:4000/auth/user/login", {
-      email: data.email,
-      password: data.password,
-    });
+    if (data.email && data.password) {
+      try {
+        let response = await axios.post(
+          "http://localhost:4000/auth/user/login",
+          {
+            email: data.email,
+            password: data.password,
+          }
+        );
+        if (response.data.msg === "userLogin Success") {
+          toast.success("Login Successfull", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          setTimeout(() => {
+            let res = JSON.stringify(response.data.data);
 
-    let res = JSON.stringify(response.data.data);
+            localStorage.setItem("login", res);
 
-    localStorage.setItem("login", res);
+            history.push("/");
+          }, 2000);
+        }
+      } catch (err) {
+        toast.error("Invalid Credentials", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    }
   };
 
   return (
@@ -62,6 +98,8 @@ const Login = () => {
             Don't have an account? Sign Up
           </Link>
         </div>
+
+        <ToastContainer />
       </div>
     </>
   );

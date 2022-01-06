@@ -48,7 +48,14 @@ const SellSection1 = () => {
         </div>
       </div>
 
-      <SellOrder />
+      <SellOrder
+        sellText={
+          show === "1"
+            ? "Your order is placed to websell!"
+            : "Your order is placed in market!"
+        }
+        sellto={show === "1" ? true : false}
+      />
     </>
   );
 };

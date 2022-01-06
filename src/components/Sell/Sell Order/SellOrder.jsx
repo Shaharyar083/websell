@@ -1,32 +1,102 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import google from "../../../assets/google.png";
 import { AiOutlineCheck } from "react-icons/ai";
+import axios from "axios";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./sellOrder.scss";
 
-const SellOrder = () => {
+const SellOrder = (props) => {
+  let userId = JSON.parse(localStorage.getItem("login"));
+
+  const [currentImage, setCurrentImage] = useState("Choose image");
+  const [imagePreview, setImagePreview] = useState("");
+
+  const [selling, setSell] = useState("");
   const [data, setData] = useState({
     url: "",
     niche: "",
     income: "",
+    price: "",
+    image: "",
   });
 
-  const [monetization, setMone] = useState({ amazon: false, adsense: false });
+  console.log("lll", userId._id);
+
+  const [monetization, setMone] = useState([]);
 
   const [trend, setTrend] = useState("");
-
-  const [value, setValue] = useState("");
 
   const handleInput = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const submit = () => {};
+  const fileHandle = (e) => {
+    if (e.target.files.length !== 0) {
+      setCurrentImage(e.target.files[0].name);
+      setData({
+        ...data,
+        [e.target.name]: e.target.files[0],
+      });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  useEffect(() => {
+    setSell(props.sellto ? "websell" : "market");
+  }, [props]);
+
+  const submit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("userId", userId._id);
+    formData.append("url", data.url);
+    formData.append("niche", data.niche);
+    formData.append("monetization", monetization);
+    formData.append("trend", trend);
+    formData.append("income", data.income);
+    formData.append("price", data.price);
+    formData.append("imageLink", data.image);
+
+    try {
+      let response = await axios.post(
+        "http://localhost:4000/post/create",
+        formData
+      );
+
+      toast.success("Your order is placed successfully", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (err) {
+      toast.error("Your order is not placed", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
   return (
     <>
       <div className="sellOrder">
+        <div className="text-main">{props.sellText}</div>
         <div className="valuate-form">
           <div className="step1">
             <div className="title">WHAT IS YOUR URL?</div>
@@ -65,30 +135,40 @@ const SellOrder = () => {
               <div
                 className="checkimg"
                 onClick={() => {
-                  setMone({
-                    ...monetization,
-                    amazon: !monetization.amazon,
-                  });
+                  monetization.includes("amazon")
+                    ? setMone((preVal) => {
+                        return monetization.filter((data) => data != "amazon");
+                      })
+                    : setMone((preVal) => {
+                        return [...preVal, "amazon"];
+                      });
                 }}
               >
                 <img
                   src="https://www.motioninvest.com/wp-content/uploads/2021/06/Icon_AmazonAssociates.png"
                   alt=""
                 />
-                {monetization.amazon && <AiOutlineCheck className="icon" />}
+                {monetization.includes("amazon") && (
+                  <AiOutlineCheck className="icon" />
+                )}
               </div>
 
               <div
                 className="checkimg"
                 onClick={() => {
-                  setMone({
-                    ...monetization,
-                    adsense: !monetization.adsense,
-                  });
+                  monetization.includes("google")
+                    ? setMone((preVal) => {
+                        return monetization.filter((data) => data != "google");
+                      })
+                    : setMone((preVal) => {
+                        return [...preVal, "google"];
+                      });
                 }}
               >
                 <img src={google} alt="" />
-                {monetization.adsense && <AiOutlineCheck className="icon" />}
+                {monetization.includes("google") && (
+                  <AiOutlineCheck className="icon" />
+                )}
               </div>
             </div>
           </div>
@@ -172,23 +252,62 @@ const SellOrder = () => {
           </div>
 
           <div className="step1">
-            <div className="title">Analytics</div>
+            <div className="title">Selling Price </div>
 
             <div className="para">
-              Please share your Google Analytics with us. Our email is
-              websell@gmail.com
+              What is the price you are selling this website?
             </div>
+
+            <input
+              placeholder="$1000.00"
+              name="price"
+              type="number"
+              value={data.price}
+              onChange={handleInput}
+            />
           </div>
 
-          <div
-            className="btn-c"
-            style={{ marginTop: "30px" }}
-            onClick={() => {
-              submit();
-            }}
-          >
-            Submit
+          {props.sellto ? (
+            <div className="step1">
+              <div className="title">Analytics</div>
+
+              <div className="para">
+                Please share your Google Analytics with us. Our email is
+                websell@gmail.com
+              </div>
+            </div>
+          ) : (
+            <div className="step1">
+              <div className="title">Website ScreenShot</div>
+
+              <div className="para">
+                Please provide the website homepage screenshot with us.
+              </div>
+
+              {imagePreview ? (
+                <div className="imagePreivew">
+                  <img src={imagePreview} />
+                </div>
+              ) : null}
+
+              <div className="group">
+                <label htmlFor="image" className="image__label">
+                  {/* {currentImage} */}
+                </label>
+                <input
+                  type="file"
+                  name="image"
+                  id="image"
+                  onChange={fileHandle}
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="btn-c" style={{ marginTop: "30px" }} onClick={submit}>
+            Place Order
           </div>
+          <ToastContainer />
         </div>
       </div>
     </>
