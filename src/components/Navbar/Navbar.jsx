@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import "./navbar.scss";
 
 const Navbar = () => {
+  const history = useHistory();
   const [login, setLogin] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [off, setOff] = useState(false);
@@ -94,7 +95,10 @@ const Navbar = () => {
               style={{ textDecoration: "none" }}
               className="free1"
               onClick={() => {
+                history.push("/");
+
                 localStorage.removeItem("login");
+
                 window.location.reload();
               }}
             >

@@ -49,7 +49,7 @@ const SellOrder = (props) => {
   };
 
   useEffect(() => {
-    setSell(props.sellto ? "websell" : "market");
+    setSell(props.sellto ? "admin" : "market");
   }, [props]);
 
   const submit = async (e) => {
@@ -59,11 +59,12 @@ const SellOrder = (props) => {
     formData.append("userId", userId._id);
     formData.append("url", data.url);
     formData.append("niche", data.niche);
-    formData.append("monetization", monetization);
+    formData.append("source", monetization);
     formData.append("trend", trend);
     formData.append("income", data.income);
     formData.append("price", data.price);
-    formData.append("imageLink", data.image);
+    formData.append("file", data.image);
+    formData.append("type", selling);
 
     try {
       let response = await axios.post(
