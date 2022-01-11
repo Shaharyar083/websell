@@ -163,7 +163,7 @@ router.post("/accept", async (req, res) => {
 router.post("/delete", async (req, res) => {
   try {
     let { id } = req.body;
-    let postInfo = PostModel.findById(id);
+    let postInfo = await PostModel.findById(id);
     await cloudinary.uploader.destroy(postInfo.imgId);
     let del = await PostModel.findByIdAndDelete(id);
     res.status(200).json({ msg: "Post Delete Success", data: del });
