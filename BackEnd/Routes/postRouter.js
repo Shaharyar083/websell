@@ -13,6 +13,17 @@ router.get("/get-market", async (req, res) => {
   }
 });
 
+// Getting Posts by ID :
+router.post("/my", async (req, res) => {
+  let { id } = req.body
+  try {
+    let postData = await PostModel.find({ user: id });
+    res.status(200).json({ msg: "All MY Posts", data: postData });
+  } catch (err) {
+    res.status(400).json({ msg: "Server Error at Getting My Posts" });
+  }
+});
+
 // Getting All Posts :
 router.get("/get-admin", async (req, res) => {
   try {
