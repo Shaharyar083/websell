@@ -102,6 +102,32 @@ router.post("/create", upload.single("file"), async (req, res) => {
   }
 });
 
+
+// Biding Post :
+router.post("/bid", async (req, res) => {
+  let { postId, userId, ammount } = req.body
+  try {
+    let postData = await PostModel.findOne({ _id: postId });
+
+    let newData = postData
+
+    newData.bid = newData.bid.length <= 0 ? [{ user: userId, ammount: ammount }] : [...newData.bid, { user: userId, ammount: ammount }]
+
+    console.log(newData);
+    // let completePost = postData
+    // let bids = postData.bid
+
+    // bids.push({ user: userId, ammount: ammount })
+    // completePost.bid = bids
+
+    let bidAdded = await newData.save()
+    res.status(200).json({ msg: "BID to Post Success", data: bidAdded });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ msg: "Server Error at BIDDING Post" });
+  }
+});
+
 // Delete Post:
 router.post("/delete", async (req, res) => {
   try {

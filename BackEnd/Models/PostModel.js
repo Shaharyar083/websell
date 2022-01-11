@@ -23,6 +23,17 @@ const PostSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "UserModel",
   },
+  bid: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "UserModel"
+      },
+      ammount: {
+        type: "String"
+      }
+    }
+  ],
   type: {
     type: String,
   },
