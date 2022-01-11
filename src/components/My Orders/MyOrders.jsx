@@ -43,20 +43,27 @@ const MyOrders = () => {
 
   const callApi = async () => {
     try {
-      let response = await axios.get("http://localhost:4000/message/get-msg");
+      let login = JSON.parse(localStorage.getItem("login"));
+      console.log("login===========>", login);
+      let response = await axios.post("http://localhost:4000/post/my", {
+        id: login._id,
+      });
+
       console.log(
         "admin messages component axios result===========>",
         response.data.data
       );
+
       setState(response.data.data);
     } catch (err) {
       console.log("err=====>", err);
     }
   };
 
-  //   useEffect(() => {
-  //     callApi();
-  //   }, []);
+  useEffect(() => {
+    callApi();
+  }, []);
+
   return (
     <>
       <Navbar />
