@@ -136,8 +136,10 @@ router.post("/accept", async (req, res) => {
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD
+        user: "ahsantanveer0008@gmail.com",
+        pass: "ahsan008*"
+        // user: process.env.EMAIL,
+        // pass: process.env.PASSWORD
       }
     });
     const mailOptions = {
@@ -148,12 +150,12 @@ router.post("/accept", async (req, res) => {
     };
     transporter.sendMail(mailOptions, function (err, info) {
       if (err)
-        console.log(err)
+        res.status(400).json({ msg: "Mail Send Fail" });
       else
-        console.log(info);
+        res.status(200).json({ msg: "Mail Send Success" });
     });
   } catch (err) {
-    res.status(400).json({ msg: "Server Error at Getting all Posts" });
+    res.status(400).json({ msg: "Server Error at Sending Mail" });
   }
 });
 
