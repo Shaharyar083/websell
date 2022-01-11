@@ -17,8 +17,15 @@ import TableRow from "@mui/material/TableRow";
 const columns = [
   { label: "ID" },
   { label: "URL", align: "start" },
-  { label: "Price", align: "right" },
+  { label: "Price", align: "start" },
   { label: "Offers", align: "right" },
+];
+
+const columns1 = [
+  { label: "ID" },
+  { label: "Email", align: "start" },
+  { label: "Price", align: "start" },
+  { label: "Accept", align: "right" },
 ];
 
 const rows = [
@@ -28,6 +35,7 @@ const rows = [
 
 const MyOrders = () => {
   const [state, setState] = useState([]);
+  const [offer, setOffer] = useState([]);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -109,8 +117,8 @@ const MyOrders = () => {
                           {row.url}
                         </TableCell>
 
-                        <TableCell style={{ width: 300 }} align={"right"}>
-                          {row.price}
+                        <TableCell style={{ width: 200 }} align={"start"}>
+                          $ {row.price}
                         </TableCell>
 
                         <TableCell style={{ width: 100 }} align={"right"}>
@@ -129,6 +137,87 @@ const MyOrders = () => {
                             // }}
                           >
                             View Offer
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </div>
+      </div>
+
+      <div className="myorders">
+        <div className="text-main">Offer:</div>
+
+        <div className="published-table">
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+            <TableContainer>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    {columns1.map((column, index) => (
+                      <TableCell
+                        key={index}
+                        align={column.align}
+                        style={{ fontSize: "16px", fontWeight: "bold" }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  {state
+                    ?.sort((a, b) => {
+                      return b.price - a.price;
+                    })
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => (
+                      <TableRow key={index}>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          style={{ width: 20 }}
+                        >
+                          {index}
+                        </TableCell>
+                        <TableCell style={{ color: "#6754e2" }} align={"start"}>
+                          {row.url}
+                        </TableCell>
+
+                        <TableCell style={{ width: 200 }} align={"start"}>
+                          $ {row.price}
+                        </TableCell>
+
+                        <TableCell style={{ width: 100 }} align={"right"}>
+                          <div
+                            style={{
+                              padding: "5px",
+                              background: "#2dc799",
+                              width: "max-content",
+                              marginLeft: "auto",
+                              color: "#fdfdfd",
+                              cursor: "pointer",
+                            }}
+                            // onClick={() => {
+                            //   handleOpen();
+                            //   setMsg(row.message);
+                            // }}
+                          >
+                            Accept
                           </div>
                         </TableCell>
                       </TableRow>
