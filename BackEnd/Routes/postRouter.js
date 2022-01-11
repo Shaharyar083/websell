@@ -2,6 +2,7 @@ const router = require("express").Router();
 const PostModel = require("../Models/PostModel");
 const multer = require("multer");
 const cloudinary = require("../utility/cloudinary");
+var nodemailer = require('nodemailer');
 
 // Getting All Posts :
 router.get("/get-market", async (req, res) => {
@@ -17,7 +18,7 @@ router.get("/get-market", async (req, res) => {
 router.post("/my", async (req, res) => {
   let { id } = req.body
   try {
-    let postData = await PostModel.find({ user: id }).populate("bid.user") ;
+    let postData = await PostModel.find({ user: id }).populate("bid.user");
     res.status(200).json({ msg: "All MY Posts", data: postData });
   } catch (err) {
     res.status(400).json({ msg: "Server Error at Getting My Posts" });
@@ -125,6 +126,34 @@ router.post("/bid", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json({ msg: "Server Error at BIDDING Post" });
+  }
+});
+
+// Accept Offer :
+router.post("/accept", async (req, res) => {
+  let { userEmail, sellerEmail, price, url } = req.body
+  try {
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+      }
+    });
+    const mailOptions = {
+      from: process.env.EMAIL, // sender address
+      to: userEmail, // list of receivers
+      subject: 'OFFER ACCEPTED', // Subject line
+      html: `<p> Your Offer (${url}) for ${price} is Accepted by seller. <br/> Please contact seller at ${sellerEmail} . Thanks </p>`// plain text body
+    };
+    transporter.sendMail(mailOptions, function (err, info) {
+      if (err)
+        console.log(err)
+      else
+        console.log(info);
+    });
+  } catch (err) {
+    res.status(400).json({ msg: "Server Error at Getting all Posts" });
   }
 });
 
