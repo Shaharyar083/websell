@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 
-import google from "../../../assets/google.png";
+import google from "../../assets/google.png";
 import { AiOutlineCheck } from "react-icons/ai";
 import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./sellOrder.scss";
+import "./admin.scss";
 
-const SellOrder = (props) => {
+const PostAdd = () => {
   let userId = JSON.parse(localStorage.getItem("login"));
 
+  console.log("userId", userId);
   const [currentImage, setCurrentImage] = useState("Choose image");
   const [imagePreview, setImagePreview] = useState("");
 
-  const [selling, setSell] = useState("");
+  const [selling, setSell] = useState("websell");
   const [data, setData] = useState({
     url: "",
     niche: "",
@@ -46,9 +47,10 @@ const SellOrder = (props) => {
     }
   };
 
-  useEffect(() => {
-    setSell(props.sellto ? "admin" : "market");
-  }, [props]);
+  // console.log("data", data);
+  // console.log("monetization", monetization);
+  // console.log("trend", trend);
+  // console.log("selling", selling);
 
   const reset = () => {
     setCurrentImage("Choose image");
@@ -109,7 +111,7 @@ const SellOrder = (props) => {
   return (
     <>
       <div className="sellOrder">
-        <div className="text-main">{props.sellText}</div>
+        <div className="text-main">Post Add</div>
         <div className="valuate-form">
           <div className="step1">
             <div className="title">WHAT IS YOUR URL?</div>
@@ -280,7 +282,7 @@ const SellOrder = (props) => {
             />
           </div>
 
-          {props.sellto ? (
+          {false ? (
             <div className="step1">
               <div className="title">Analytics</div>
 
@@ -327,4 +329,4 @@ const SellOrder = (props) => {
   );
 };
 
-export default SellOrder;
+export default PostAdd;

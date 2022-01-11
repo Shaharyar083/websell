@@ -4,9 +4,29 @@ const multer = require("multer");
 const cloudinary = require("../utility/cloudinary");
 
 // Getting All Posts :
-router.get("/get", async (req, res) => {
+router.get("/get-market", async (req, res) => {
   try {
-    let postData = PostModel.find();
+    let postData = await PostModel.find({ type: "market" });
+    res.status(200).json({ msg: "All PostsData", data: postData });
+  } catch (err) {
+    res.status(400).json({ msg: "Server Error at Getting all Posts" });
+  }
+});
+
+// Getting All Posts :
+router.get("/get-admin", async (req, res) => {
+  try {
+    let postData = await PostModel.find({ type: "admin" });
+    res.status(200).json({ msg: "All PostsData", data: postData });
+  } catch (err) {
+    res.status(400).json({ msg: "Server Error at Getting all Posts" });
+  }
+});
+
+// Getting All Posts :
+router.get("/get-websell", async (req, res) => {
+  try {
+    let postData = await PostModel.find({ type: "websell" });
     res.status(200).json({ msg: "All PostsData", data: postData });
   } catch (err) {
     res.status(400).json({ msg: "Server Error at Getting all Posts" });
@@ -18,9 +38,9 @@ const upload = multer();
 router.post("/create", upload.single("file"), async (req, res) => {
   try {
     let { url, niche, price, income, trend, source, user, type } = req.body;
-    if (type == "market") {
+    if (type == "market" || type == "websell") {
       const imgFile = req.file.path;
-      console.log("FILE=========== ", req.file);
+      console.log("FILE=========== ", req.file.path);
       cloudinary.uploader.upload(imgFile, async (error, result) => {
         if (result) {
           let PostData = new PostModel({

@@ -52,6 +52,14 @@ const Navbar = () => {
               </Link>
 
               <Link
+                to="/myorder"
+                style={{ textDecoration: "none" }}
+                className="text"
+              >
+                My Order
+              </Link>
+
+              <Link
                 to="/contact-us"
                 style={{ textDecoration: "none" }}
                 className="text"
@@ -83,7 +91,7 @@ const Navbar = () => {
         <div className="right">
           {admin ? (
             <Link
-              to="/website-valuation-tool"
+              to="/admin"
               style={{ textDecoration: "none" }}
               className="free1"
             >

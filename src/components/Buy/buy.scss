@@ -1,2 +1,78 @@
 .buy {
 }
+
+.detail-modal {
+  margin-top: 50px;
+  .title-main {
+    color: #6754e2;
+    font-family: "Poppins";
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+
+  .detail_wrap {
+    .image {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+      img {
+        width: 250px;
+      }
+    }
+
+    .text_wrap {
+      //   max-width: 500px;
+      //   margin: auto;
+      margin-top: 20px;
+      display: flex;
+
+      margin-left: 200px;
+
+      .title {
+        color: #6754e2;
+        font-family: "Poppins";
+        font-size: 14px;
+        font-weight: 600;
+        width: 300px;
+      }
+
+      .para {
+        color: #2d2d2d;
+        font-family: "Poppins";
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .inner_image {
+        width: 100px;
+
+        img {
+          max-width: 100%;
+          width: 100%;
+        }
+      }
+
+      input {
+        padding: 8px 10px;
+        width: 300px;
+      }
+    }
+
+    .buy {
+      cursor: pointer;
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      background: #6754e2;
+      padding: 15px;
+
+      border-radius: 20px;
+
+      color: #fff;
+      font-family: "Poppins";
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+}

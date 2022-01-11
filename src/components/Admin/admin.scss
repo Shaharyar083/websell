@@ -1,0 +1,129 @@
+.admin {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+
+  .right {
+    width: 100%;
+    overflow-x: scroll;
+  }
+}
+
+.sidebar {
+  min-width: 260px;
+  background-color: rgb(25, 25, 33);
+
+  a {
+    text-decoration: none;
+  }
+
+  .logo {
+    cursor: pointer;
+    padding: 20px 0vw;
+    display: flex;
+    justify-content: center;
+
+    transform: rotate(180deg);
+  }
+
+  .main {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    justify-content: space-between;
+    background-color: #22232a;
+    padding-top: 50px;
+    // padding-top: 2.604vw;
+    // padding-bottom: 4vw;
+    border-top-right-radius: 20px;
+    background-image: linear-gradient(
+      180deg,
+      #23252e 0,
+      #23252e 0.01%,
+      #1f1f28
+    );
+
+    .menu {
+      position: relative;
+      display: flex;
+      align-items: center;
+      color: #fff;
+      padding-left: 40px;
+
+      margin-bottom: 40px;
+      text-decoration: none;
+      background-color: transparent;
+      outline: none;
+      cursor: pointer;
+      transition: color 0.3s;
+
+      .back {
+        left: 5%;
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        padding: 27px;
+        background: linear-gradient(90deg, #774bbd, #a23bb8);
+        background: linear-gradient(90deg, #4f66e7, #1e509c);
+
+        border-radius: 10px;
+
+        // border-radius: 0.52vw;
+
+        .back-inner {
+          position: absolute;
+          left: 2%;
+          top: 0;
+          z-index: 1;
+          padding: 27px;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, #774bbd, #a23bb8);
+          background: linear-gradient(90deg, #4f66e7, #1e509c);
+
+          // border-radius: 0.52vw;
+          border-radius: 10px;
+          transform: skewX(-10deg);
+        }
+      }
+
+      .icon {
+        position: relative;
+        z-index: 3;
+        margin-right: 10px;
+        object-fit: cover;
+        font-size: 16px;
+        transition: all 0.5s ease;
+        margin-top: -2px;
+      }
+
+      span {
+        position: relative;
+        z-index: 3;
+        font-family: "Work Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
+.sell-request {
+  max-width: 1000px;
+  margin: auto;
+
+  .text-main {
+    color: #6754e2;
+    font-weight: bold;
+    font-size: 40px;
+    text-align: start;
+    margin-top: 40px;
+  }
+
+  .published-table {
+    margin-top: 60px;
+  }
+}

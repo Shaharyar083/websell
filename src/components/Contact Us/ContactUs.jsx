@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import "./contact.scss";
+import axios from "axios";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const ContactUs = () => {
   const [data, setData] = useState({
     email: "",
@@ -13,7 +18,63 @@ const ContactUs = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  console.log(data);
+  useEffect(() => {
+    if (localStorage.getItem("login")) {
+      let login = JSON.parse(localStorage.getItem("login"));
+
+      setData({ ...data, email: login.email });
+    }
+  }, []);
+
+  const send = async () => {
+    if (data.email && data.name && data.msg) {
+      try {
+        let response = await axios.post("http://localhost:4000/message/send", {
+          name: data.name,
+          email: data.email,
+          message: data.msg,
+        });
+
+        toast.success("Message send successfully", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+
+        setData({
+          ...data,
+          name: "",
+          msg: "",
+        });
+      } catch (err) {
+        toast.error("Message not send", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    } else {
+      toast.error("fill complete form", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
+  console.log("Contact US States ==========>", data);
 
   return (
     <>
@@ -52,9 +113,12 @@ const ContactUs = () => {
               onChange={handleInput}
             />
 
-            <div className="btn">Submit</div>
+            <div className="btn" onClick={send}>
+              Submit
+            </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
       <Footer />
     </>
