@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import "../WebSell Listing/websell.scss";
 import axios from "axios";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // material
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
@@ -22,15 +25,49 @@ const style = {
 };
 
 const Market = () => {
+  let userId = JSON.parse(localStorage.getItem("login"));
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [detail, setDetail] = useState();
   const [bid, setBid] = useState("");
 
-  console.log("detail", bid);
-
   const [res, setRes] = useState([]);
+
+  const offer = async () => {
+    try {
+      let response = await axios.post("http://localhost:4000/post/bid", {
+        postId: detail._id,
+        userId: userId._id,
+        ammount: bid,
+      });
+      console.log("market offer placed response===========>", response);
+
+      toast.success("Offer placed", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      handleClose();
+    } catch (err) {
+      console.log("err=====>", err);
+      toast.error("Offer not placed", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
   const callApi = async () => {
     try {
@@ -45,6 +82,9 @@ const Market = () => {
   useEffect(() => {
     callApi();
   }, []);
+
+  console.log("Single Post Detail ======>", detail);
+
   return (
     <>
       <div className="websell">
@@ -190,11 +230,15 @@ const Market = () => {
                 </div>
               </div>
 
-              <div className="buy">Offer</div>
+              <div className="buy" onClick={offer}>
+                Offer
+              </div>
             </div>
           </Box>
         </Fade>
       </Modal>
+
+      <ToastContainer />
     </>
   );
 };

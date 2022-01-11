@@ -17,6 +17,7 @@ const columns = [
   { label: "Monetization", align: "right" },
   { label: "Income", align: "right" },
   { label: "Price", align: "right" },
+  { label: "Reject", align: "right" },
 
   { label: "Accept", align: "right" },
 ];
@@ -106,7 +107,22 @@ const SellRequest = () => {
                         {row.price}
                       </TableCell>
 
-                      <TableCell style={{ width: 100 }} align={"right"}>
+                      <TableCell style={{ width: 70 }} align={"right"}>
+                        <div
+                          style={{
+                            padding: "5px",
+                            background: "rgba(255, 0, 0, 0.6)",
+                            width: "max-content",
+                            marginLeft: "auto",
+                            color: "#fdfdfd",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Reject
+                        </div>
+                      </TableCell>
+
+                      <TableCell style={{ width: 70 }} align={"right"}>
                         <div
                           style={{
                             padding: "5px",

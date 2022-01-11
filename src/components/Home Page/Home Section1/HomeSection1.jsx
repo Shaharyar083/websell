@@ -19,7 +19,7 @@ const HomeSection1 = () => {
             <span>Profitable Websites</span>
           </div>
 
-          <div className="btn-wrap">
+          {/* <div className="btn-wrap">
             <Link to="/buy" style={{ textDecoration: "none" }} className="buy">
               BUY A WEBSITE
             </Link>
@@ -31,7 +31,7 @@ const HomeSection1 = () => {
             >
               SELL A WEBSITE
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

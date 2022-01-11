@@ -5,11 +5,12 @@ import "./admin.scss";
 import { BsFillFileEarmarkPostFill } from "react-icons/bs";
 import { MdOutlineSell } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
-import { AiFillHome } from "react-icons/ai";
+import { BsCurrencyDollar } from "react-icons/bs";
 import { AiOutlineMessage } from "react-icons/ai";
 import PostAdd from "./PostAdd";
 import SellRequest from "./SellRequest";
 import Messages from "./Messages";
+import BuyOrders from "./BuyOrders";
 
 const Admin = () => {
   const history = useHistory();
@@ -61,6 +62,20 @@ const Admin = () => {
             <div
               className="menu"
               onClick={() => {
+                setShow("3");
+              }}
+            >
+              <div className={show === "3" ? "back" : "display-none"}>
+                <div className="back-inner"></div>
+              </div>
+
+              <BsCurrencyDollar className="icon" />
+              <span>Orders</span>
+            </div>
+
+            <div
+              className="menu"
+              onClick={() => {
                 setShow("4");
               }}
             >
@@ -94,7 +109,7 @@ const Admin = () => {
           ) : show === "2" ? (
             <SellRequest />
           ) : show === "3" ? (
-            <SellRequest />
+            <BuyOrders />
           ) : show === "4" ? (
             <Messages />
           ) : null}

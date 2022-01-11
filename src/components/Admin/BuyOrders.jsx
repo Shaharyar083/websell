@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import "./myOrders.scss";
+import "../My Orders/myOrders.scss";
 import axios from "axios";
 
 // Material
@@ -18,8 +18,6 @@ const columns = [
   { label: "ID" },
   { label: "URL", align: "start" },
   { label: "Price", align: "start" },
-  { label: "Delete", align: "right" },
-
   { label: "Offers", align: "right" },
 ];
 
@@ -35,7 +33,7 @@ const rows = [
   { title: "hello world", date: "12/12/2021", edit: "edit", delete: "delete" },
 ];
 
-const MyOrders = () => {
+const BuyOrders = () => {
   const [state, setState] = useState([]);
   const [offer, setOffer] = useState([]);
 
@@ -51,31 +49,18 @@ const MyOrders = () => {
     setPage(0);
   };
 
-  const DeleteAdd = async (id) => {
-    console.log("post id ======>", id);
-    try {
-      let response = await axios.post("http://localhost:4000/post/delete", {
-        id: id,
-      });
-
-      console.log("Delete Add===========>", response);
-    } catch (err) {
-      console.log("err=====>", err);
-    }
-  };
-
   const callApi = async () => {
     try {
       let login = JSON.parse(localStorage.getItem("login"));
-      // console.log("login===========>", login);
+      console.log("login===========>", login);
       let response = await axios.post("http://localhost:4000/post/my", {
         id: login._id,
       });
 
-      // console.log(
-      //   "admin messages component axios result===========>",
-      //   response.data.data
-      // );
+      console.log(
+        "admin messages component axios result===========>",
+        response.data.data
+      );
 
       setState(response.data.data);
     } catch (err) {
@@ -89,7 +74,6 @@ const MyOrders = () => {
 
   return (
     <>
-      <Navbar />
       <div className="myorders">
         <div className="text-main">My Orders:</div>
 
@@ -140,24 +124,6 @@ const MyOrders = () => {
                           <div
                             style={{
                               padding: "5px",
-                              background: "rgba(255, 0, 0, 0.6)",
-                              width: "max-content",
-                              marginLeft: "auto",
-                              color: "#fdfdfd",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              DeleteAdd(row._id);
-                            }}
-                          >
-                            Delete
-                          </div>
-                        </TableCell>
-
-                        <TableCell style={{ width: 100 }} align={"right"}>
-                          <div
-                            style={{
-                              padding: "5px",
                               background: "#2dc799",
                               width: "max-content",
                               marginLeft: "auto",
@@ -191,7 +157,7 @@ const MyOrders = () => {
       </div>
 
       <div className="myorders">
-        <div className="text-main">Offers:</div>
+        <div className="text-main">Offer:</div>
 
         <div className="published-table">
           <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -214,7 +180,7 @@ const MyOrders = () => {
                 <TableBody>
                   {offer
                     ?.sort((a, b) => {
-                      return b.ammount - a.ammount;
+                      return b.price - a.price;
                     })
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => (
@@ -270,9 +236,8 @@ const MyOrders = () => {
           </Paper>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
 
-export default MyOrders;
+export default BuyOrders;
