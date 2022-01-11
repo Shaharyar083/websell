@@ -158,6 +158,35 @@ router.post("/accept", async (req, res) => {
     res.status(400).json({ msg: "Server Error at Sending Mail" });
   }
 });
+// Accept Offer :
+router.post("/adaccept", async (req, res) => {
+  let { userEmail, url, price, type } = req.body
+  try {
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: "ahsantanveer0008@gmail.com",
+        pass: "ahsan008*"
+        // user: process.env.EMAIL,
+        // pass: process.env.PASSWORD
+      }
+    });
+    const mailOptions = {
+      from: process.env.EMAIL, // sender address
+      to: userEmail, // list of receivers
+      subject: 'OFFER ACCEPTED', // Subject line
+      html: `<p> Your Offer (${url}) of Rs.${price} is ${type == "reject" ? "REJECTED" : "ACCEPTED"} by Admin. <br/> Thanks </p>`// plain text body
+    };
+    transporter.sendMail(mailOptions, function (err, info) {
+      if (err)
+        res.status(400).json({ msg: "Mail Send Fail" });
+      else
+        res.status(200).json({ msg: "Mail Send Success" });
+    });
+  } catch (err) {
+    res.status(400).json({ msg: "Server Error at Sending Mail" });
+  }
+});
 
 // Delete Post:
 router.post("/delete", async (req, res) => {
