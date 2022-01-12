@@ -28,7 +28,7 @@ router.post("/my", async (req, res) => {
 // Getting All Posts :
 router.get("/get-admin", async (req, res) => {
   try {
-    let postData = await PostModel.find({ type: "admin" });
+    let postData = await PostModel.find({ type: "admin" }).populate("user");
     res.status(200).json({ msg: "All PostsData", data: postData });
   } catch (err) {
     res.status(400).json({ msg: "Server Error at Getting all Posts" });

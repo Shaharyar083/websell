@@ -46,6 +46,10 @@ const SellRequest = () => {
   };
 
   const RejectOffer = async (userEmail, price, url) => {
+    console.log("userEmail", userEmail);
+    console.log("price", price);
+    console.log("url", url);
+
     try {
       let response = await axios.post("http://localhost:4000/post/adaccept", {
         userEmail,
@@ -189,11 +193,7 @@ const SellRequest = () => {
                             cursor: "pointer",
                           }}
                           onClick={() => {
-                            RejectOffer(
-                              row.bid.user.email,
-                              row.bid.ammount,
-                              row.url
-                            );
+                            RejectOffer(row.user.email, row.price, row.url);
                           }}
                         >
                           Reject
@@ -211,11 +211,7 @@ const SellRequest = () => {
                             cursor: "pointer",
                           }}
                           onClick={() => {
-                            AcceptOffer(
-                              row.bid.user.email,
-                              row.bid.ammount,
-                              row.url
-                            );
+                            AcceptOffer(row.user.email, row.price, row.url);
                           }}
                         >
                           Accept

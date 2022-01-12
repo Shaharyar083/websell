@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import Swal from "sweetalert2";
 import google from "../../../assets/google.png";
 import { AiOutlineCheck } from "react-icons/ai";
 import axios from "axios";
@@ -90,6 +90,14 @@ const SellOrder = (props) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
+      });
+
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        title: "$5 have been charged",
+        showConfirmButton: false,
+        timer: 3000,
       });
 
       reset();

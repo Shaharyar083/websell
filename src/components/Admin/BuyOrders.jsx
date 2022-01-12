@@ -4,6 +4,8 @@ import Footer from "../Footer/Footer";
 import "../My Orders/myOrders.scss";
 import axios from "axios";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Material
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -18,6 +20,7 @@ const columns = [
   { label: "ID" },
   { label: "URL", align: "start" },
   { label: "Price", align: "start" },
+  { label: "Delete", align: "right" },
   { label: "Offers", align: "right" },
 ];
 
@@ -34,8 +37,11 @@ const rows = [
 ];
 
 const BuyOrders = () => {
+  let sellerEmail = JSON.parse(localStorage.getItem("login"));
+
   const [state, setState] = useState([]);
   const [offer, setOffer] = useState([]);
+  const [webURL, setUrl] = useState("");
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -47,6 +53,75 @@ const BuyOrders = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const DeleteAdd = async (id) => {
+    console.log("post id ======>", id);
+    try {
+      let response = await axios.post("http://localhost:4000/post/delete", {
+        id: id,
+      });
+
+      toast.success("Post delete successfully", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (err) {
+      console.log("err=====>", err);
+      toast.error("Server error and post not deleted", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
+  const AcceptOffer = async (userEmail, price) => {
+    console.log(userEmail);
+    try {
+      let response = await axios.post("http://localhost:4000/post/adaccept", {
+        userEmail,
+        price,
+        url: webURL,
+        type: "Accept",
+      });
+
+      toast.success("Accept message send to buyer", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      console.log("Accept Offer ===========>", response);
+    } catch (err) {
+      console.log("err=====>", err);
+      toast.error("Server error and msg not send to buyer", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 
   const callApi = async () => {
@@ -124,6 +199,24 @@ const BuyOrders = () => {
                           <div
                             style={{
                               padding: "5px",
+                              background: "rgba(255, 0, 0, 0.6)",
+                              width: "max-content",
+                              marginLeft: "auto",
+                              color: "#fdfdfd",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              DeleteAdd(row._id);
+                            }}
+                          >
+                            Delete
+                          </div>
+                        </TableCell>
+
+                        <TableCell style={{ width: 100 }} align={"right"}>
+                          <div
+                            style={{
+                              padding: "5px",
                               background: "#2dc799",
                               width: "max-content",
                               marginLeft: "auto",
@@ -132,6 +225,7 @@ const BuyOrders = () => {
                             }}
                             onClick={() => {
                               setOffer(row.bid);
+                              setUrl(row.url);
                             }}
                           >
                             View Offer
@@ -180,7 +274,7 @@ const BuyOrders = () => {
                 <TableBody>
                   {offer
                     ?.sort((a, b) => {
-                      return b.price - a.price;
+                      return b.ammount - a.ammount;
                     })
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => (
@@ -210,10 +304,9 @@ const BuyOrders = () => {
                               color: "#fdfdfd",
                               cursor: "pointer",
                             }}
-                            // onClick={() => {
-                            //   handleOpen();
-                            //   setMsg(row.message);
-                            // }}
+                            onClick={() => {
+                              AcceptOffer(row.user.email, row.ammount);
+                            }}
                           >
                             Accept
                           </div>
@@ -236,6 +329,7 @@ const BuyOrders = () => {
           </Paper>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };
