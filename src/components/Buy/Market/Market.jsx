@@ -4,12 +4,13 @@ import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Modal } from "react-bootstrap";
 
 // material
-import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
+// import Backdrop from "@mui/material/Backdrop";
+// import Box from "@mui/material/Box";
+// import Modal from "@mui/material/Modal";
+// import Fade from "@mui/material/Fade";
 
 const style = {
   position: "absolute",
@@ -26,6 +27,7 @@ const style = {
 
 const Market = () => {
   let userId = JSON.parse(localStorage.getItem("login"));
+  const [show, setShow] = useState(false);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -54,6 +56,8 @@ const Market = () => {
         progress: undefined,
       });
 
+      setBid("");
+      setShow(false);
       handleClose();
     } catch (err) {
       console.log("err=====>", err);
@@ -91,7 +95,7 @@ const Market = () => {
         <div className="title-main">MarketPlace</div>
         {res?.map((data, index) => {
           return (
-            <div className="card" key={index}>
+            <div className="card1" key={index}>
               <div className="left">
                 <img
                   // src="https://www.motioninvest.com/wp-content/uploads/2021/06/SitesAvailable_Hero-768x432.png"
@@ -130,7 +134,9 @@ const Market = () => {
                 <div
                   className="btn-offer"
                   onClick={() => {
-                    handleOpen();
+                    // handleOpen();
+                    setShow(true);
+
                     setDetail(data);
                   }}
                 >
@@ -142,7 +148,7 @@ const Market = () => {
         })}
       </div>
 
-      <Modal
+      {/* <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
@@ -155,87 +161,96 @@ const Market = () => {
         className="detail-modal"
       >
         <Fade in={open}>
-          <Box sx={style}>
-            <div className="title-main">Website Detail</div>
+          <Box sx={style}> */}
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        // dialogClassName="modal-90w"
+        aria-labelledby="example-custom-modal-styling-title"
+        className="detail-modal"
+      >
+        <div className="detail-modal-inner">
+          <div className="title-main">Website Detail</div>
 
-            <div className="detail_wrap">
-              <div className="image">
-                <img src={detail?.img} alt="" />
-              </div>
+          <div className="detail_wrap">
+            <div className="image">
+              <img src={detail?.img} alt="" />
+            </div>
 
-              <div className="text_wrap">
-                <div className="title">Website Url:</div>
+            <div className="text_wrap">
+              <div className="title">Website Url:</div>
 
-                <div className="para">{detail?.url}</div>
-              </div>
+              <div className="para">{detail?.url}</div>
+            </div>
 
-              <div className="text_wrap">
-                <div className="title">Website Niche:</div>
+            <div className="text_wrap">
+              <div className="title">Website Niche:</div>
 
-                <div className="para">{detail?.niche}</div>
-              </div>
+              <div className="para">{detail?.niche}</div>
+            </div>
 
-              <div className="text_wrap">
-                <div className="title">Website Income Source:</div>
+            <div className="text_wrap">
+              <div className="title">Website Income Source:</div>
 
-                <div className="para">{detail?.source[0]}</div>
-              </div>
+              <div className="para">{detail?.source[0]}</div>
+            </div>
 
-              <div className="text_wrap">
-                <div className="title">Website Trend:</div>
+            <div className="text_wrap">
+              <div className="title">Website Trend:</div>
 
-                <div className="inner_image">
-                  <img
-                    src={
-                      detail?.trend === "inc"
-                        ? "https://www.motioninvest.com/wp-content/uploads/2021/07/increasing-1.png"
-                        : detail?.trend === "dec"
-                        ? "https://www.motioninvest.com/wp-content/uploads/2021/07/decreasing-1.png"
-                        : detail?.trend === "flat"
-                        ? "https://www.motioninvest.com/wp-content/uploads/2021/07/flat-1.png"
-                        : detail?.trend === "hill"
-                        ? "https://www.motioninvest.com/wp-content/uploads/2021/07/hilly-1.png"
-                        : ""
-                    }
-                    alt=""
-                  />
-                </div>
-              </div>
-
-              <div className="text_wrap">
-                <div className="title">Website Income Generate:</div>
-
-                <div className="para">$ {Math.round(detail?.income / 6)}</div>
-              </div>
-
-              <div className="text_wrap">
-                <div className="title">Website Selling Price:</div>
-
-                <div className="para">$ {detail?.price}</div>
-              </div>
-
-              <div className="text_wrap">
-                <div className="title">Your Bid:</div>
-
-                <div className="para">
-                  <input
-                    placeholder="Enter you bid"
-                    type="number"
-                    name="bid"
-                    value={bid}
-                    onChange={(e) => {
-                      setBid(e.target.value);
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="buy" onClick={offer}>
-                Offer
+              <div className="inner_image">
+                <img
+                  src={
+                    detail?.trend === "inc"
+                      ? "https://www.motioninvest.com/wp-content/uploads/2021/07/increasing-1.png"
+                      : detail?.trend === "dec"
+                      ? "https://www.motioninvest.com/wp-content/uploads/2021/07/decreasing-1.png"
+                      : detail?.trend === "flat"
+                      ? "https://www.motioninvest.com/wp-content/uploads/2021/07/flat-1.png"
+                      : detail?.trend === "hill"
+                      ? "https://www.motioninvest.com/wp-content/uploads/2021/07/hilly-1.png"
+                      : ""
+                  }
+                  alt=""
+                />
               </div>
             </div>
-          </Box>
-        </Fade>
+
+            <div className="text_wrap">
+              <div className="title">Website Income Generate:</div>
+
+              <div className="para">$ {Math.round(detail?.income / 6)}</div>
+            </div>
+
+            <div className="text_wrap">
+              <div className="title">Website Selling Price:</div>
+
+              <div className="para">$ {detail?.price}</div>
+            </div>
+
+            <div className="text_wrap">
+              <div className="title">Your Bid:</div>
+
+              <div className="para">
+                <input
+                  placeholder="Enter you bid"
+                  type="number"
+                  name="bid"
+                  value={bid}
+                  onChange={(e) => {
+                    setBid(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="buy" onClick={offer}>
+              Offer
+            </div>
+          </div>
+        </div>
+        {/* </Box>
+        </Fade> */}
       </Modal>
 
       <ToastContainer />

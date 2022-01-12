@@ -2,7 +2,7 @@ const router = require("express").Router();
 const PostModel = require("../Models/PostModel");
 const multer = require("multer");
 const cloudinary = require("../utility/cloudinary");
-var nodemailer = require('nodemailer');
+var nodemailer = require("nodemailer");
 
 // Getting All Posts :
 router.get("/get-market", async (req, res) => {
@@ -16,7 +16,7 @@ router.get("/get-market", async (req, res) => {
 
 // Getting Posts by ID :
 router.post("/my", async (req, res) => {
-  let { id } = req.body
+  let { id } = req.body;
   try {
     let postData = await PostModel.find({ user: id }).populate("bid.user");
     res.status(200).json({ msg: "All MY Posts", data: postData });
@@ -103,16 +103,18 @@ router.post("/create", upload.single("file"), async (req, res) => {
   }
 });
 
-
 // Biding Post :
 router.post("/bid", async (req, res) => {
-  let { postId, userId, ammount } = req.body
+  let { postId, userId, ammount } = req.body;
   try {
     let postData = await PostModel.findOne({ _id: postId });
 
-    let newData = postData
+    let newData = postData;
 
-    newData.bid = newData.bid.length <= 0 ? [{ user: userId, ammount: ammount }] : [...newData.bid, { user: userId, ammount: ammount }]
+    newData.bid =
+      newData.bid.length <= 0
+        ? [{ user: userId, ammount: ammount }]
+        : [...newData.bid, { user: userId, ammount: ammount }];
 
     console.log(newData);
     // let completePost = postData
@@ -121,7 +123,7 @@ router.post("/bid", async (req, res) => {
     // bids.push({ user: userId, ammount: ammount })
     // completePost.bid = bids
 
-    let bidAdded = await newData.save()
+    let bidAdded = await newData.save();
     res.status(200).json({ msg: "BID to Post Success", data: bidAdded });
   } catch (err) {
     console.log(err);
@@ -131,28 +133,27 @@ router.post("/bid", async (req, res) => {
 
 // Accept Offer :
 router.post("/accept", async (req, res) => {
-  let { userEmail, sellerEmail, price, url } = req.body
+  let { userEmail, sellerEmail, price, url } = req.body;
+  console.log(req.body);
   try {
     var transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: "gmail",
       auth: {
         user: "ahsantanveer0008@gmail.com",
-        pass: "ahsan008*"
+        pass: "ahsan008*",
         // user: process.env.EMAIL,
         // pass: process.env.PASSWORD
-      }
+      },
     });
     const mailOptions = {
       from: process.env.EMAIL, // sender address
       to: userEmail, // list of receivers
-      subject: 'OFFER ACCEPTED', // Subject line
-      html: `<p> Your Offer (${url}) for ${price} is Accepted by seller. <br/> Please contact seller at ${sellerEmail} . Thanks </p>`// plain text body
+      subject: "OFFER ACCEPTED", // Subject line
+      html: `<p> Your Offer (${url}) for ${price} is Accepted by seller. <br/> Please contact seller at ${sellerEmail} . Thanks </p>`, // plain text body
     };
     transporter.sendMail(mailOptions, function (err, info) {
-      if (err)
-        res.status(400).json({ msg: "Mail Send Fail" });
-      else
-        res.status(200).json({ msg: "Mail Send Success" });
+      if (err) res.status(400).json({ msg: "Mail Send Fail" });
+      else res.status(200).json({ msg: "Mail Send Success" });
     });
   } catch (err) {
     res.status(400).json({ msg: "Server Error at Sending Mail" });
@@ -160,28 +161,28 @@ router.post("/accept", async (req, res) => {
 });
 // Accept Offer :
 router.post("/adaccept", async (req, res) => {
-  let { userEmail, url, price, type } = req.body
+  let { userEmail, url, price, type } = req.body;
   try {
     var transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: "gmail",
       auth: {
         user: "ahsantanveer0008@gmail.com",
-        pass: "ahsan008*"
+        pass: "ahsan008*",
         // user: process.env.EMAIL,
         // pass: process.env.PASSWORD
-      }
+      },
     });
     const mailOptions = {
       from: process.env.EMAIL, // sender address
       to: userEmail, // list of receivers
-      subject: 'OFFER ACCEPTED', // Subject line
-      html: `<p> Your Offer (${url}) of Rs.${price} is ${type == "reject" ? "REJECTED" : "ACCEPTED"} by Admin. <br/> Thanks </p>`// plain text body
+      subject: "OFFER ACCEPTED", // Subject line
+      html: `<p> Your Offer (${url}) of Rs.${price} is ${
+        type == "reject" ? "REJECTED" : "ACCEPTED"
+      } by Admin. <br/> Thanks </p>`, // plain text body
     };
     transporter.sendMail(mailOptions, function (err, info) {
-      if (err)
-        res.status(400).json({ msg: "Mail Send Fail" });
-      else
-        res.status(200).json({ msg: "Mail Send Success" });
+      if (err) res.status(400).json({ msg: "Mail Send Fail" });
+      else res.status(200).json({ msg: "Mail Send Success" });
     });
   } catch (err) {
     res.status(400).json({ msg: "Server Error at Sending Mail" });
@@ -193,6 +194,7 @@ router.post("/delete", async (req, res) => {
   try {
     let { id } = req.body;
     let postInfo = await PostModel.findById(id);
+    console.log("postInfo ===>", postInfo);
     await cloudinary.uploader.destroy(postInfo.imgId);
     let del = await PostModel.findByIdAndDelete(id);
     res.status(200).json({ msg: "Post Delete Success", data: del });

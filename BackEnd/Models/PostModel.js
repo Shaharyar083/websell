@@ -27,12 +27,12 @@ const PostSchema = mongoose.Schema({
     {
       user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "UserModel"
+        ref: "UserModel",
       },
       ammount: {
-        type: "String"
-      }
-    }
+        type: "String",
+      },
+    },
   ],
   type: {
     type: String,

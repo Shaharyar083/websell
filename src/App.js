@@ -12,6 +12,7 @@ import Sell from "./components/Sell/Sell";
 import WebsiteValuation from "./components/Website Valuation/WebsiteValuation";
 
 // import Homee from "./Admin/Admin/Home/Homee"
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (

@@ -4,6 +4,9 @@ import Footer from "../Footer/Footer";
 import "./myOrders.scss";
 import axios from "axios";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // Material
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -36,8 +39,11 @@ const rows = [
 ];
 
 const MyOrders = () => {
+  let sellerEmail = JSON.parse(localStorage.getItem("login"));
+
   const [state, setState] = useState([]);
   const [offer, setOffer] = useState([]);
+  const [webURL, setUrl] = useState("");
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -58,24 +64,74 @@ const MyOrders = () => {
         id: id,
       });
 
-      console.log("Delete Add===========>", response);
+      toast.success("Post delete successfully", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (err) {
       console.log("err=====>", err);
+      toast.error("Server error and post not deleted", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
+  const AcceptOffer = async (userEmail, sellerEmail, price) => {
+    console.log(sellerEmail);
+    try {
+      let response = await axios.post("http://localhost:4000/post/accept", {
+        userEmail,
+        sellerEmail,
+        price,
+        url: webURL,
+      });
+
+      toast.success("Accept message send to buyer", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      console.log("Accept Offer ===========>", response);
+    } catch (err) {
+      console.log("err=====>", err);
+      toast.error("Server error and msg not send to buyer", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
   const callApi = async () => {
     try {
       let login = JSON.parse(localStorage.getItem("login"));
-      // console.log("login===========>", login);
       let response = await axios.post("http://localhost:4000/post/my", {
         id: login._id,
       });
-
-      // console.log(
-      //   "admin messages component axios result===========>",
-      //   response.data.data
-      // );
 
       setState(response.data.data);
     } catch (err) {
@@ -166,6 +222,7 @@ const MyOrders = () => {
                             }}
                             onClick={() => {
                               setOffer(row.bid);
+                              setUrl(row.url);
                             }}
                           >
                             View Offer
@@ -244,10 +301,13 @@ const MyOrders = () => {
                               color: "#fdfdfd",
                               cursor: "pointer",
                             }}
-                            // onClick={() => {
-                            //   handleOpen();
-                            //   setMsg(row.message);
-                            // }}
+                            onClick={() => {
+                              AcceptOffer(
+                                row.user.email,
+                                sellerEmail.email,
+                                row.ammount
+                              );
+                            }}
                           >
                             Accept
                           </div>
@@ -271,6 +331,7 @@ const MyOrders = () => {
         </div>
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 };

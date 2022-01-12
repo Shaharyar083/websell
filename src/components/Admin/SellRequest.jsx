@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Material
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -41,6 +43,75 @@ const SellRequest = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const RejectOffer = async (userEmail, price, url) => {
+    try {
+      let response = await axios.post("http://localhost:4000/post/adaccept", {
+        userEmail,
+        price,
+        url,
+        type: "reject",
+      });
+
+      toast.success("Reject offer message send to buyer", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      console.log("Accept Offer ===========>", response);
+    } catch (err) {
+      console.log("err=====>", err);
+      toast.error("Server error and msg not send to buyer", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
+  const AcceptOffer = async (userEmail, price, url) => {
+    console.log(userEmail);
+    try {
+      let response = await axios.post("http://localhost:4000/post/adaccept", {
+        userEmail,
+        price,
+        url,
+        type: "Accept",
+      });
+
+      toast.success("Accept message send to buyer", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      console.log("Accept Offer ===========>", response);
+    } catch (err) {
+      console.log("err=====>", err);
+      toast.error("Server error and msg not send to buyer", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 
   const callApi = async () => {
@@ -117,6 +188,13 @@ const SellRequest = () => {
                             color: "#fdfdfd",
                             cursor: "pointer",
                           }}
+                          onClick={() => {
+                            RejectOffer(
+                              row.bid.user.email,
+                              row.bid.ammount,
+                              row.url
+                            );
+                          }}
                         >
                           Reject
                         </div>
@@ -131,6 +209,13 @@ const SellRequest = () => {
                             marginLeft: "auto",
                             color: "#fdfdfd",
                             cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            AcceptOffer(
+                              row.bid.user.email,
+                              row.bid.ammount,
+                              row.url
+                            );
                           }}
                         >
                           Accept
@@ -153,6 +238,7 @@ const SellRequest = () => {
           />
         </Paper>
       </div>
+      <ToastContainer />
     </div>
   );
 };

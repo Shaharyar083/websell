@@ -2,7 +2,17 @@
 }
 
 .detail-modal {
-  margin-top: 50px;
+  // padding: 6rem 3rem;
+  // overflow: scroll !important;
+
+  .modal-dialog {
+    max-width: 800px !important;
+  }
+
+  .detail-modal-inner {
+    padding: 3rem;
+  }
+
   .title-main {
     color: #6754e2;
     font-family: "Poppins";
@@ -27,14 +37,14 @@
       margin-top: 20px;
       display: flex;
 
-      margin-left: 200px;
+      margin-left: 150px;
 
       .title {
         color: #6754e2;
         font-family: "Poppins";
         font-size: 14px;
         font-weight: 600;
-        width: 300px;
+        width: 200px;
       }
 
       .para {

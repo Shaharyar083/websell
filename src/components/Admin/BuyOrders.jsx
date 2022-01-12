@@ -74,7 +74,7 @@ const BuyOrders = () => {
 
   return (
     <>
-      <div className="myorders">
+      <div className="myorders admin-orders">
         <div className="text-main">My Orders:</div>
 
         <div className="published-table">
@@ -156,7 +156,7 @@ const BuyOrders = () => {
         </div>
       </div>
 
-      <div className="myorders">
+      <div className="myorders admin-orders">
         <div className="text-main">Offer:</div>
 
         <div className="published-table">

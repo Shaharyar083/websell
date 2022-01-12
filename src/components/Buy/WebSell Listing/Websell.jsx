@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./websell.scss";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Modal } from "react-bootstrap";
 
 // material
-import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
+// import Backdrop from "@mui/material/Backdrop";
+// import Box from "@mui/material/Box";
+// import Modal from "@mui/material/Modal";
+// import Fade from "@mui/material/Fade";
 
 const style = {
   position: "absolute",
@@ -22,13 +25,52 @@ const style = {
 };
 
 const Websell = () => {
+  let userId = JSON.parse(localStorage.getItem("login"));
+  const [show, setShow] = useState(false);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [detail, setDetail] = useState();
-  console.log("detail", detail);
+  const [bid, setBid] = useState("");
 
   const [res, setRes] = useState([]);
+
+  const offer = async () => {
+    try {
+      let response = await axios.post("http://localhost:4000/post/bid", {
+        postId: detail._id,
+        userId: userId._id,
+        ammount: bid,
+      });
+      console.log("websell offer placed response===========>", response);
+
+      toast.success("Offer placed", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      setBid("");
+      handleClose();
+      setShow(false);
+    } catch (err) {
+      console.log("err=====>", err);
+      toast.error("Offer not placed", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
   const callApi = async () => {
     try {
@@ -50,7 +92,7 @@ const Websell = () => {
         <div className="title-main">WebSell Listing</div>
         {res?.map((data, index) => {
           return (
-            <div className="card" key={index}>
+            <div className="card1" key={index}>
               <div className="left">
                 <img src={data.img} alt="" />
               </div>
@@ -85,7 +127,8 @@ const Websell = () => {
                 <div
                   className="btn-offer"
                   onClick={() => {
-                    handleOpen();
+                    // handleOpen();
+                    setShow(true);
                     setDetail(data);
                   }}
                 >
@@ -97,7 +140,7 @@ const Websell = () => {
         })}
       </div>
 
-      <Modal
+      {/* <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
@@ -110,70 +153,90 @@ const Websell = () => {
         className="detail-modal"
       >
         <Fade in={open}>
-          <Box sx={style}>
-            <div className="title-main">Website Detail</div>
+          <Box sx={style}> */}
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        // dialogClassName="modal-90w"
+        aria-labelledby="example-custom-modal-styling-title"
+        className="detail-modal"
+      >
+        <div className="detail-modal-inner">
+          <div className="title-main">Website Detail</div>
 
-            <div className="detail_wrap">
-              <div className="image">
-                <img src={detail?.img} alt="" />
-              </div>
-
-              <div className="text_wrap">
-                <div className="title">Website Url:</div>
-
-                <div className="para">{detail?.url}</div>
-              </div>
-
-              <div className="text_wrap">
-                <div className="title">Website Niche:</div>
-
-                <div className="para">{detail?.niche}</div>
-              </div>
-
-              <div className="text_wrap">
-                <div className="title">Website Income Source:</div>
-
-                <div className="para">{detail?.source[0]}</div>
-              </div>
-
-              <div className="text_wrap">
-                <div className="title">Website Trend:</div>
-
-                <div className="inner_image">
-                  <img
-                    src={
-                      detail?.trend === "inc"
-                        ? "https://www.motioninvest.com/wp-content/uploads/2021/07/increasing-1.png"
-                        : detail?.trend === "dec"
-                        ? "https://www.motioninvest.com/wp-content/uploads/2021/07/decreasing-1.png"
-                        : detail?.trend === "flat"
-                        ? "https://www.motioninvest.com/wp-content/uploads/2021/07/flat-1.png"
-                        : detail?.trend === "hill"
-                        ? "https://www.motioninvest.com/wp-content/uploads/2021/07/hilly-1.png"
-                        : ""
-                    }
-                    alt=""
-                  />
-                </div>
-              </div>
-
-              <div className="text_wrap">
-                <div className="title">Website Income Generate:</div>
-
-                <div className="para">$ {Math.round(detail?.income / 6)}</div>
-              </div>
-
-              <div className="text_wrap">
-                <div className="title">Website Selling Price:</div>
-
-                <div className="para">$ {detail?.price}</div>
-              </div>
-
-              <div className="buy">Buy</div>
+          <div className="detail_wrap">
+            <div className="image">
+              <img src={detail?.img} alt="" />
             </div>
-          </Box>
-        </Fade>
+            <div className="text_wrap">
+              <div className="title">Website Url:</div>
+
+              <div className="para">{detail?.url}</div>
+            </div>
+            <div className="text_wrap">
+              <div className="title">Website Niche:</div>
+
+              <div className="para">{detail?.niche}</div>
+            </div>
+            <div className="text_wrap">
+              <div className="title">Website Income Source:</div>
+
+              <div className="para">{detail?.source[0]}</div>
+            </div>
+            <div className="text_wrap">
+              <div className="title">Website Trend:</div>
+
+              <div className="inner_image">
+                <img
+                  src={
+                    detail?.trend === "inc"
+                      ? "https://www.motioninvest.com/wp-content/uploads/2021/07/increasing-1.png"
+                      : detail?.trend === "dec"
+                      ? "https://www.motioninvest.com/wp-content/uploads/2021/07/decreasing-1.png"
+                      : detail?.trend === "flat"
+                      ? "https://www.motioninvest.com/wp-content/uploads/2021/07/flat-1.png"
+                      : detail?.trend === "hill"
+                      ? "https://www.motioninvest.com/wp-content/uploads/2021/07/hilly-1.png"
+                      : ""
+                  }
+                  alt=""
+                />
+              </div>
+            </div>
+            <div className="text_wrap">
+              <div className="title">Website Income Generate:</div>
+
+              <div className="para">$ {Math.round(detail?.income / 6)}</div>
+            </div>
+            <div className="text_wrap">
+              <div className="title">Website Selling Price:</div>
+
+              <div className="para">$ {detail?.price}</div>
+            </div>
+            <div className="text_wrap">
+              <div className="title">Your Bid:</div>
+
+              <div className="para">
+                <input
+                  placeholder="Enter you bid"
+                  type="number"
+                  name="bid"
+                  value={bid}
+                  onChange={(e) => {
+                    setBid(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="buy" onClick={offer}>
+              Offer
+            </div>
+          </div>
+        </div>
+        {/* </Box>
+        </Fade> */}
       </Modal>
+      <ToastContainer />
     </>
   );
 };
